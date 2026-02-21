@@ -1,0 +1,9 @@
+[package]
+name = "tui_color_picker"
+license = "MIT"
+description = "A library for drawing color wheels for Ratatui for picking RGB colors"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+ratatui = "0.30.0"
