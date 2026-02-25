@@ -1,31 +1,47 @@
-use ratatui::{style::Style, widgets::StatefulWidget};
+use ratatui::widgets::{Block, StatefulWidget, Widget};
 
 use crate::RectState;
 
-/// Defines a StatefulWidget in the shape of a rectangle, using a RectState as its state (just like
-/// ColorEllipse)
-pub struct ColorRect;
+/// Defines a color wheel StatefulWidget in the shape of a rectangle, using a RectState as its state (just like
+/// ColorEllipse). This can optionally be surrounded by a Block.
+#[derive(Debug, Default, Clone, PartialEq)]
+pub struct ColorRect<'a> {
+    block: Option<Block<'a>>
+}
 
-impl StatefulWidget for ColorRect {
+impl<'a> ColorRect<'a> {
+    pub fn new() -> ColorRect<'a> {
+        ColorRect { block: None }
+    }
+
+    pub fn block(mut self, block: Block<'a>) -> ColorRect<'a> {
+        self.block = Some(block);
+        self
+    }
+}
+
+impl<'a> StatefulWidget for ColorRect<'a> {
     type State = RectState;
 
     fn render(self, area: ratatui::prelude::Rect, buf: &mut ratatui::prelude::Buffer, state: &mut Self::State)
         where Self: Sized 
     {
-        if !state.rect_locked { 
-            state.update_to_rect(area);
+        if let Some(block) = self.block {
+            state.rect = block.inner(area);
+            block.render(area, buf);
+        }
+        else {
+            state.rect = area;
         }
 
-        let sx = state.x;
-        let ex = state.x + state.width;
-        let sy = state.y;
-        let ey = state.y + state.height;
+        let sx = state.rect.x;
+        let ex = state.rect.x + state.rect.width;
+        let sy = state.rect.y;
+        let ey = state.rect.y + state.rect.height;
 
         for x in sx..ex {
             for y in sy..ey {
-                buf.set_stringn(x, y, "█", 1,
-                    Style::default().fg(state.color(x, y))
-                    );
+                buf[(x, y)].set_char('█').set_fg(state.color(x,y));
             }
         }
     }

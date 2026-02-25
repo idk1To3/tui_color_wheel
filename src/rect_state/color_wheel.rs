@@ -1,10 +1,10 @@
-use ratatui::{style::Style, widgets::{Block, StatefulWidget, Widget}};
+use ratatui::widgets::{Block, StatefulWidget, Widget};
 
 use crate::RectState;
 
 /// Defines a color wheel StatefulWidget in the shape of an ellipse, using a RectState as its state (just like
-/// ColorRect).
-#[derive(Debug, Default)]
+/// ColorRect). This can optionally be surrounded by a Block.
+#[derive(Debug, Default, Clone, PartialEq)]
 pub struct ColorWheel<'a> {
     block: Option<Block<'a>>
 }

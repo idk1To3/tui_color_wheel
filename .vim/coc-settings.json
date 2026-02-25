@@ -1,6 +1,0 @@
-{
-        "rustAnalyzer.cargo.allFeatures": true,
-        "rust-analyzer.linkedProjects": [
-                "Cargo.toml"
-        ]
-}
