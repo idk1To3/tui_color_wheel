@@ -27,6 +27,11 @@ impl<'a> StatefulWidget for ColorRect<'a> {
         where Self: Sized 
     {
         if let Some(block) = self.block {
+            for x in area.left() .. area.right() {
+                for y in area.top() .. area.bottom() {
+                    buf[(x,y)].set_char(' ');
+                }
+            }
             state.rect = block.inner(area);
             block.render(area, buf);
         }
