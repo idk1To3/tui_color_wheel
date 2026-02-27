@@ -2,7 +2,7 @@
 name = "tui_color_picker"
 license = "MIT"
 description = "A library for drawing color wheels for Ratatui for picking RGB colors"
-version = "1.0.1"
+version = "1.0.2"
 edition = "2024"
 repository = "https://github.com/idk1To3/tui_color_wheel"
 
